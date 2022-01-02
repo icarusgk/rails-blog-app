@@ -11,7 +11,8 @@ class ApplicationController < ActionController::Base
   end
 
   def new_post
-    render "application/new_post"
+    post = Post.new
+    render "application/new_post", locals: { post: post }
   end
 
   def create_post
@@ -20,8 +21,11 @@ class ApplicationController < ActionController::Base
                     'body' => params['body'],
                     'author' => params['author']
 
-    post.save
-    redirect_to "/list_posts"
+    if post.save
+      redirect_to "/list_posts"
+    else
+      render "application/new_post", locals: { post: post }
+    end
   end
 
   def edit_post
@@ -36,7 +40,11 @@ class ApplicationController < ActionController::Base
                         'body' => params['body'],
                         'author' => params['author']
 
-    post.save
+    if post.save
+      redirect_to "list_posts"
+    else
+      render "application/edit_post", locals: { post: post }
+    end
     redirect_to "/list_posts"
   end
 

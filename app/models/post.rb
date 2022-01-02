@@ -13,11 +13,18 @@ class Post
     @created_at ||= attributes['created_at']
   end
 
+  def valid?
+    title.present? && body.present? && author.present?
+  end
+
   def new_record?
     id.nil?
   end
 
   def save
+    # Guard clause
+    return false unless valid?
+
     if new_record?
       insert
     else
@@ -60,6 +67,8 @@ class Post
 
   def self.all
     post_hashes = connection.execute "SELECT * FROM posts"
+
+    # Return all post hashes as Post's
     post_hashes.collect do |post_hash|
       Post.new(post_hash)
     end
@@ -67,6 +76,8 @@ class Post
 
   def self.find(id)
     post_hash = connection.execute("SELECT * FROM posts WHERE posts.id = ? LIMIT 1", id).first
+
+    # Return the found post has as a post
     Post.new(post_hash)
   end
 
