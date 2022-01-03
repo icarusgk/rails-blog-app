@@ -29,11 +29,12 @@
           <small class="comment_meta">
             <span class="comment_author">#<%= index+1 %> by <%= comment.author %></span>
             <em class="comment_created_at"><%= comment.created_at %></em>
-
           </small>
-
         </p>
         <p class="comment_body"><%= comment.body %></p>
+        <form method="post" action="/list_posts/<%= post.id %>/delete_comment/<%= comment.id %>">
+          <input type="submit" value="Delete comment"/>
+        </form>
         <hr />
       <% end %>
       <!-- new comment form -->

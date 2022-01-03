@@ -85,6 +85,10 @@ class Post
     comment.save
   end
 
+  def delete_comment(comment_id)
+    Comment.find(comment_id).destroy
+  end
+
   def self.all
     post_hashes = connection.execute "SELECT * FROM posts"
 
