@@ -75,6 +75,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def list_comments
+    comments = Comment.all
+
+    render "application/list_comments", locals: { comments: comments }
+  end
+
   def delete_comment
     post = Post.find params['post_id']
     post.delete_comment params['comment_id']

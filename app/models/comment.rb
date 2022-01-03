@@ -42,6 +42,17 @@ class Comment
                        Date.current.to_s
   end
 
+  def self.all
+    comment_row_hashes = connection.execute "SELECT * FROM comments"
+    comment_row_hashes.collect do |comment_row_hash|
+      Comment.new(comment_row_hash)
+    end
+  end
+
+  def post
+    Post.find post_id
+  end
+
   def self.find(id)
     comment_hash = connection.execute("SELECT * FROM comments WHERE comments.id = ? LIMIT 1", id).first
     Comment.new comment_hash
