@@ -1,8 +1,9 @@
 class Post
-  attr_reader :id, :title, :body, :author, :created_at
+  attr_reader :id, :title, :body, :author, :created_at, :errors
 
   def initialize(attributes={})
     set_attributes attributes
+    @errors = {}
   end
 
   def set_attributes(attributes)
@@ -14,6 +15,9 @@ class Post
   end
 
   def valid?
+    @errors['title'] = "can't be blank" if title.blank?
+    @errors['body'] = "can't be blank" if body.blank?
+    @errors['author'] = "can't be blank" if author.blank?
     title.present? && body.present? && author.present?
   end
 
