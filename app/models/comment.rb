@@ -1,5 +1,5 @@
 class Comment
-  attr_reader :id, :body, :author, :post_id, :created_at
+  attr_reader :id, :body, :author, :post_id, :created_at, :errors
 
   def initialize(attributes={})
     @id = attributes['id'] if new_record?
@@ -7,6 +7,13 @@ class Comment
     @author = attributes['author']
     @post_id = attributes['post_id']
     @created_at ||= attributes['created_at']
+    @errors = {}
+  end
+
+  def valid?
+    @errors['body'] = "can't be blank" if body.blank?
+    @errors['author'] = "can't be blank" if author.blank?
+    @errors.empty?
   end
 
   def new_record?
@@ -14,6 +21,7 @@ class Comment
   end
 
   def save
+    return false unless valid?
     if new_record?
       insert
     else
