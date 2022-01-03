@@ -7,7 +7,8 @@ class ApplicationController < ActionController::Base
 
   def show_post
     post = Post.find(params['id'])
-    render "application/show_post", locals: { post: post}
+
+    render "application/show_post", locals: { post: post }
   end
 
   def new_post
@@ -53,6 +54,14 @@ class ApplicationController < ActionController::Base
     post.destroy
 
     redirect_to "/list_posts"
+  end
+
+  def create_comment
+    post = Post.find(params['post_id'])
+    post.create_comment 'body' => params['body'],
+                        'author' => params['author']
+
+    redirect_to "/show_post/#{params['post_id']}"
   end
 
   private

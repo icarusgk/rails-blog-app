@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  # Posts
   get "/list_posts", to: "application#list_posts"
   get "/show_post/:id", to: "application#show_post"
 
@@ -9,4 +10,7 @@ Rails.application.routes.draw do
   post "/update_post/:id", to: "application#update_post"
 
   post "/delete_post/:id", to: "application#delete_post"
+
+  # Comments
+  post "/create_comment_for_post/:post_id", to: "application#create_comment"
 end
