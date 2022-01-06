@@ -1,10 +1,11 @@
 class CommentsController < ApplicationController
+  before_action :find_post, only: [:create, :destroy]
+
   def index
     @comments = Comment.all
   end
 
   def create
-    @post = Post.find(params['post_id'])
     @comment = post.build_comment 'body' => params['body'],
                                  'author' => params['author']
 
@@ -16,9 +17,14 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    post = Post.find params['post_id']
-    post.delete_comment params['comment_id']
+    @post.delete_comment params[:id]
 
-    redirect_to post_path(post.id)
+    redirect_to post_path(@post.id)
+  end
+
+  private
+
+  def find_post
+    @post = Post.find(params[:id])
   end
 end

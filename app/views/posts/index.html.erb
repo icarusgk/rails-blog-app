@@ -1,23 +1,23 @@
 <html lang="en">
   <body>
     <div class="posts">
-      <% posts.each do |post| %>
+      <% @posts.each do |post| %>
         <div class="posts">
           <h2 class="title">
-            <a href="/show_post/<%= post.id %>"><%= post.title %></a>
+            <a href="/posts/<%= post.id %>"><%= post.title %></a>
           </h2>
 
           <small class="meta">
             <span class="author">by: <%= post.author %> -</span>
             <em class="created_at"><%= post.created_at %></em>
           </small>
-          <a href="/edit_post/<%= post.id %>">Edit</a>
-          <form method="post" action="/delete_post/<%= post.id %>" style="display: inline">
+          <a href="/posts/<%= post.id %>/edit">Edit</a>
+          <form method="post" action="/posts/<%= post.id %>" style="display: inline">
             <input type="submit" value="Delete">
           </form>
         </div>
       <% end %>
     </div>
-  <a href="/new_post">New Post</a>
+  <a href="/posts/new">New Post</a>
   </body>
 </html>

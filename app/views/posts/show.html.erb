@@ -1,21 +1,21 @@
 <html>
   <body>
-    <a href="/list_posts">Back to Posts</a>
+    <a href="/posts">Back to Posts</a>
     <div class="post">
       <h2 class="title">
-        <%= post.title %>
+        <%= @post.title %>
       </h2>
 
       <small class="meta">
-        <span class="author">by <%= post.author %> -</span>
-        <em class="created_at"><%= post.created_at %></em>
+        <span class="author">by <%= @post.author %> -</span>
+        <em class="created_at"><%= @post.created_at %></em>
       </small>
 
-      <p class="body"><%= post.body %></p>
+      <p class="body"><%= @post.body %></p>
     </div>
     <hr />
     <div class="errors">
-      <% comment.errors.each do |attribute, error| %>
+      <% @comment.errors.each do |attribute, error| %>
         <p class="error" style="color: orange">
           <%= attribute %>: <%= error %>
         </p>
@@ -23,7 +23,7 @@
     </div>
     <div class="comments">
       <h3>Comments:</h3>
-      <% post.comments.each_with_index do |comment, index| %>
+      <% @post.comments.each_with_index do |comment, index| %>
         <!-- display each comment -->
         <p class="comment">
           <small class="comment_meta">
@@ -32,19 +32,19 @@
           </small>
         </p>
         <p class="comment_body"><%= comment.body %></p>
-        <form method="post" action="/list_posts/<%= post.id %>/delete_comment/<%= comment.id %>">
+        <form method="post" action="/list_posts/<%= @post.id %>/delete_comment/<%= comment.id %>">
           <input type="submit" value="Delete comment"/>
         </form>
         <hr />
       <% end %>
       <!-- new comment form -->
-      <form method="post" action="/create_comment_for_post/<%= post.id %>">
+      <form method="post" action="/create_comment_for_post/<%= @post.id %>">
         <label for="body">Comment</label>
-        <textarea id="body" name="body"><%= comment.body %></textarea>
+        <textarea id="body" name="body"><%= @comment.body %></textarea>
         <br /> <br />
 
         <label for="author">Name</label>
-        <input id="author" name="author" type="text" value="<%= comment.author %>" />
+        <input id="author" name="author" type="text" value="<%= @comment.author %>" />
         <br /> <br />
 
         <input type="submit" value="Add Comment" />
