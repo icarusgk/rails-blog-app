@@ -1,64 +1,50 @@
 class PostsController < ApplicationController
-  def list_posts
-    posts = Post.all
-
-    render "application/list_posts", locals: { posts: posts }
+  def index
+    @posts = Post.all
   end
 
-  def show_post
-    post = Post.find(params['id'])
-    comment = Comment.new
-    comments = post.comments
-
-    render "application/show_post", locals: {
-      post: post,
-      comment: comment,
-      comments: comments
-    }
+  def show
+    @post = Post.find(params['id'])
+    @comment = Comment.new
   end
 
-  def new_post
-    post = Post.new
-    render "application/new_post", locals: { post: post }
+  def new
+    @post = Post.new
   end
 
-  def create_post
-    # Define the query using a heredoc
-    post = Post.new 'title' => params['title'],
+  def create
+    @post = Post.new 'title' => params['title'],
                     'body' => params['body'],
                     'author' => params['author']
 
-    if post.save
-      redirect_to "/list_posts"
+    if @post.save
+      redirect_to posts_path
     else
-      render "application/new_post", locals: { post: post }
+      render "new"
     end
   end
 
-  def edit_post
-    post = Post.find(params['id'])
-
-    render "application/edit_post", locals: { post: post }
+  def edit
+    @post = Post.find(params['id'])
   end
 
-  def update_post
-    post = Post.find params['id']
-    post.set_attributes 'title' => params['title'],
-                        'body' => params['body'],
-                        'author' => params['author']
+  def update
+    @post = Post.find params['id']
+    @post.set_attributes 'title' => params['title'],
+                         'body' => params['body'],
+                         'author' => params['author']
 
-    if post.save
-      redirect_to "list_posts"
+    if @post.save
+      redirect_to posts_path
     else
-      render "application/edit_post", locals: { post: post }
+      render "edit"
     end
-    redirect_to "/list_posts"
   end
 
-  def delete_post
+  def destroy
     post = Post.find params['id']
     post.destroy
 
-    redirect_to "/list_posts"
+    redirect_to posts_path
   end
 end
