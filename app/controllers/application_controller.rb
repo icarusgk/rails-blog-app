@@ -1,8 +1,5 @@
 class ApplicationController < ActionController::Base
-  private
-  def connection
-    db_connection = SQLite3::Database.new "db/development.sqlite3"
-    db_connection.results_as_hash = true
-    db_connection
-  end
+  # Prevent CSRF attacks by raising an exception.
+  # For APIs, you may want to use :null_session instead.
+  protect_from_forgery with: :exception
 end
