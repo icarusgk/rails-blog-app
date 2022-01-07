@@ -31,27 +31,21 @@
           </small>
         </p>
         <p class="comment_body"><%= comment.body %></p>
-        <%= form_tag post_comment_path(@post.id, comment.id), method: "delete" do %>
-          <%= submit_tag "Delete Comment" %>
-        <% end %>
+        <%= form_for [@post, comment], method: "delete" do %>
+          <%= submit_tag "Delete comment" %>
+        <% end %> %>
         <hr />
       <% end %>
       <!-- new comment form -->
-      <%= my_form_tag post_comments_path(@post.id) do %>
-
-        <% unless @comment.new_record? %>
-          <%= my_hidden_field_tag '_method', 'patch' %>
-        <% end %>
-
-        <%= my_label_tag 'Comment' %>
-        <%= my_text_area_tag 'comment[body]', @comment.body %>
+      <%= my_form_for [@post, @comment] do |f| %>
+        <%= f.label :body, "Comment:" %>
+        <%= f.text_area :body %>
         <br /><br />
 
-        <%= my_label_tag 'Author' %>
-        <%= my_text_field_tag 'comment[author]', @comment.author %>
+        <%= f.label :author, 'Your Name' %>
+        <%= f.text_field :author %>
         <br /><br />
-
-        <%= my_submit_tag %>
+        <%= f.submit %>
       <% end %>
     <br />
     <%= link_to "Back to posts", posts_path %>

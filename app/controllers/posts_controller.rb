@@ -14,7 +14,7 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new params[:post]
+    @post = Post.new(post_params)
 
     if @post.save
       redirect_to posts_path
@@ -27,11 +27,7 @@ class PostsController < ApplicationController
   end
 
   def update
-    @post.set_attributes 'title' => params['title'],
-                         'body' => params['body'],
-                         'author' => params['author']
-
-    if @post.save
+    if @post.update(post_params)
       redirect_to posts_path
     else
       render "edit"
@@ -48,5 +44,9 @@ class PostsController < ApplicationController
 
   def find_post
     @post = Post.find(params[:id])
+  end
+
+  def post_params
+    params.require(:post).permit(:title, :body, :author)
   end
 end

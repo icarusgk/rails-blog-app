@@ -6,19 +6,20 @@ class CommentsController < ApplicationController
   end
 
   def create
-    @comment = post.build_comment params[:comment]
+    @comment = post.comments.build(post_params)
 
     if @comment.save
       flash[:success] = "You have successfully created the comment."
-      redirect_to post_path(@post.id)
+      redirect_to post_path(@post)
     else
+      @post.reload.comments
       flash.now[:error] = "Comment couldn't be created. Please check the errors."
       render "posts/show"
     end
   end
 
   def destroy
-    @post.delete_comment params[:id]
+    @post.comments.delete params[:id]
 
     redirect_to post_path(@post.id)
   end
@@ -27,5 +28,9 @@ class CommentsController < ApplicationController
 
   def find_post
     @post = Post.find(params[:id])
+  end
+
+  def post_params
+    params.require(:post).permit( :body, :author)
   end
 end

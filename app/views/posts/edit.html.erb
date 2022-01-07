@@ -2,9 +2,7 @@
   <body>
     <%= render "errors", obj: @post %>
 
-    <%= form_tag url_for(action: 'update'), method: 'patch' do %>
-      <%= render "form_fields" %>
-    <% end %>
+    <%= render 'form' %>>
     <br/>
     <%= link_to "Back to posts", posts_path %>
   </body>
