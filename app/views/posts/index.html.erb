@@ -12,7 +12,7 @@
             <em class="created_at"><%= post.created_at %></em>
           </small>
           <%= link_to "Edit", edit_post_path(post.id) %>
-          <%= link_to "Delete", post_path(post.id), method: :delete, data: { confirm: "Are you sure want to delete '#{post.title}'?" } %>
+          <%= link_to 'Delete', post_path(post.id), method: :delete, data: { confirm: "Are you sure want to delete '#{post.title}'?"} %>
         </div>
       <% end %>
     </div>

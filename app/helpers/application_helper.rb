@@ -23,7 +23,7 @@ module ApplicationHelper
   def my_form_tag(path, &block)
     attrs = "method='post' action='#{path}'"
     # We use capture to trap the block's return value in a variable
-    fields = capture(block)
+    fields = capture(&block)
 
     "<form #{attrs}> #{my_authenticity_token_field} #{fields} </form>".html_safe
   end

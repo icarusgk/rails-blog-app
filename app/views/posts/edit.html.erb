@@ -1,18 +1,9 @@
 <html lang="en">
   <body>
-    <%= form_tag url_for(action: 'update'), method: "patch" do %>
-      <%= label_tag "Title" %>
-      <%= text_field_tag "title", @post.title %>
-      <br/> <br/>
-      <%= label_tag "Body" %>
-      <%= text_area_tag "body", @post.body %>
-      <br/><br/>
+    <%= render "errors", obj: @post %>
 
-      <%= label_tag "Author" %>
-      <%= text_field_tag "author", @post.author %>
-      <br/><br/>
-
-      <%= submit_tag "Update Post" %>
+    <%= form_tag url_for(action: 'update'), method: 'patch' do %>
+      <%= render "form_fields" %>
     <% end %>
     <br/>
     <%= link_to "Back to posts", posts_path %>
