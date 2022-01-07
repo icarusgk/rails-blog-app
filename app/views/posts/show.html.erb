@@ -21,7 +21,6 @@
         </p>
       <% end %>
     </div>
-    <div class="comments">
       <h3>Comments:</h3>
       <% @post.comments.each_with_index do |comment, index| %>
         <!-- display each comment -->
@@ -32,26 +31,30 @@
           </small>
         </p>
         <p class="comment_body"><%= comment.body %></p>
-        <form method="post" action="/list_posts/<%= @post.id %>/delete_comment/<%= comment.id %>">
-          <input type="submit" value="Delete comment"/>
-        </form>
+        <%= form_tag post_comment_path(@post.id, comment.id), method: "delete" do %>
+          <%= submit_tag "Delete Comment" %>
+        <% end %>
         <hr />
       <% end %>
       <!-- new comment form -->
-      <form method="post" action="/create_comment_for_post/<%= @post.id %>">
-        <label for="body">Comment</label>
-        <textarea id="body" name="body"><%= @comment.body %></textarea>
-        <br /> <br />
+      <%= my_form_tag post_comments_path(@post.id) do %>
 
-        <label for="author">Name</label>
-        <input id="author" name="author" type="text" value="<%= @comment.author %>" />
-        <br /> <br />
+        <% unless @comment.new_record? %>
+          <%= my_hidden_field_tag '_method', 'patch' %>
+        <% end %>
 
-        <input type="submit" value="Add Comment" />
-      </form>
-    </div>
+        <%= my_label_tag 'Comment' %>
+        <%= my_text_area_tag 'comment[body]', @comment.body %>
+        <br /><br />
+
+        <%= my_label_tag 'Author' %>
+        <%= my_text_field_tag 'comment[author]', @comment.author %>
+        <br /><br />
+
+        <%= my_submit_tag %>
+      <% end %>
     <br />
-    <a href="/list_posts">Back to Posts</a>
+    <%= link_to "Back to posts", posts_path %>
   <br/>
   </body>
 </html>

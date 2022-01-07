@@ -1,22 +1,20 @@
 <html lang="en">
   <body>
-    <form method="post" action="/posts/<%= @post.id %>">
-      <label for="title">Title</label>
-      <input id="title" name="title" type="text" value="<%= @post.title %>"/>
+    <%= form_tag url_for(action: 'update'), method: "patch" do %>
+      <%= label_tag "Title" %>
+      <%= text_field_tag "title", @post.title %>
+      <br/> <br/>
+      <%= label_tag "Body" %>
+      <%= text_area_tag "body", @post.body %>
       <br/><br/>
 
-      <label for="body">Body</label>
-      <textarea id="body" name="body"><%= @post.body %></textarea>
+      <%= label_tag "Author" %>
+      <%= text_field_tag "author", @post.author %>
       <br/><br/>
 
-      <label for="author">Author</label>
-      <input id="author" name="author" type="text" value="<%= @post.author %>"/>
-      <br /><br/>
-
-      <input type="submit" value="Update post" />
-
-    </form>
+      <%= submit_tag "Update Post" %>
+    <% end %>
     <br/>
-    <a href="/posts">Back to Posts</a>
+    <%= link_to "Back to posts", posts_path %>
   </body>
 </html>
